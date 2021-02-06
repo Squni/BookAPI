@@ -52,10 +52,8 @@ public class MockBookService {
     }
 
     public void delBook(long id) {
-        List<Book> list = getList();
-        list = list.stream()
+        setList(getList().stream()
                 .filter(it -> it.getId() != id)
-                .collect(Collectors.toList());
-        setList(list);
+                .collect(Collectors.toList()));
     }
 }
