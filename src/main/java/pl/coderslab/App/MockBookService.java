@@ -6,19 +6,15 @@ import pl.coderslab.Entity.Book;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class MockBookService {
     private List<Book> list;
+    private long uniqId = 1L;
 
     public MockBookService() {
         this.list = new ArrayList<>();
-        this.list.add(new Book(1L, "9788324631766", "Thinking in Java",
-                "Bruce Eckel", "Helion", "programming"));
-        this.list.add(new Book(2L, "9827401230123", "Trele morele",
-                "Jackson Patty", "Ompalopma", "kids"));
-        this.list.add(new Book(3L, "0752138121023", "Babla babla",
-                "Donald Pmurt", "The White House", "fiction"));
     }
 
     public List<Book> getList() {
@@ -28,5 +24,38 @@ public class MockBookService {
 
     public void setList(List<Book> list) {
         this.list = list;
+    }
+
+    public List<Book> bookList() {
+        return getList();
+    }
+
+    public void addBook(Book book) {
+        List<Book> list = getList();
+        if (book.getId() == null) {
+            book.setId(uniqId++);
+        }
+        list.add(book);
+        setList(list);
+    }
+
+    public Book getBook(long id) {
+        return getList().stream()
+                .filter(it -> it.getId() == id)
+                .findFirst().orElseThrow(() -> new IllegalArgumentException("Book not found"));
+    }
+
+    public void editBook(long id, Book book) {
+        delBook(id);
+        book.setId(id);
+        addBook(book);
+    }
+
+    public void delBook(long id) {
+        List<Book> list = getList();
+        list = list.stream()
+                .filter(it -> it.getId() != id)
+                .collect(Collectors.toList());
+        setList(list);
     }
 }

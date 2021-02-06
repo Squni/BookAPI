@@ -1,7 +1,7 @@
 package pl.coderslab.Controllers;
 
 import org.springframework.web.bind.annotation.*;
-import pl.coderslab.App.MemoryBookService;
+import pl.coderslab.App.MockBookService;
 import pl.coderslab.Entity.Book;
 
 import java.util.List;
@@ -9,33 +9,33 @@ import java.util.List;
 @RestController
 @RequestMapping("/books")
 public class BookController {
-    private MemoryBookService memoryBookService;
+    private MockBookService mockBookService;
 
-    public BookController(MemoryBookService memoryBookService) {
-        this.memoryBookService = memoryBookService;
+    public BookController(MockBookService mockBookService) {
+        this.mockBookService = mockBookService;
     }
 
     @GetMapping
     public List<Book> allBooks() {
-        return memoryBookService.bookList();
+        return mockBookService.bookList();
     }
 
     @PostMapping
-    public void addBook(@RequestBody Book book) {memoryBookService.addBook(book);}
+    public void addBook(@RequestBody Book book) {mockBookService.addBook(book);}
 
     @GetMapping("/{id}")
     public Book getBook(@PathVariable long id) {
-        return memoryBookService.getBook(id);
+        return mockBookService.getBook(id);
     }
 
     @PutMapping
     public void editBook(@RequestBody Book book) {
-        memoryBookService.editBook(book.getId(), book);
+        mockBookService.editBook(book.getId(), book);
     }
 
     @DeleteMapping("/{id}")
     public void deleteBook(@PathVariable long id){
-        memoryBookService.delBook(id);
+        mockBookService.delBook(id);
     }
 
 }
