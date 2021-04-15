@@ -2,7 +2,7 @@
 
 ## Description
 
-Simple REST API which helps to manage f.e library, book store or any other book related storage.
+Simple REST API which helps to manage e.g. library, book store or any other book related storage.
 
 ## Features
 
